@@ -53,7 +53,7 @@
       ansible.builtin.dnf:
         name:
           - '@nginx:1.26'
-          -  '@nodejs'
+          -  nodejs
         state: present
 
 
