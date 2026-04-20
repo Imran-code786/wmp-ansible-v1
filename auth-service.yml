@@ -61,7 +61,7 @@
         path: /app
         owner: appuser
         group: appuser
-        recure: yes
+        recurse: yes
         mode: 'o-rwx'
 
     - name: start auth-service
