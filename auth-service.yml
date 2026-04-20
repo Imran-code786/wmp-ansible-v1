@@ -64,7 +64,7 @@
         recurse: yes
         mode: 'o-rwx'
 
-    - name: start auth-service
+    - name: Start auth-service
       ansible.builtin.systemd_service:
         name: auth-service
         daemon_reload: yes
