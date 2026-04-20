@@ -36,7 +36,6 @@ GRANT USAGE ON SCHEMA portfolio_schema TO analytics_svc_user;
 GRANT SELECT ON ALL TABLES IN SCHEMA portfolio_schema TO analytics_svc_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA portfolio_schema GRANT SELECT ON TABLES TO analytics_svc_user;
 
-
 GRANT USAGE, CREATE ON SCHEMA auth_schema TO auth_svc_user;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA auth_schema TO auth_svc_user;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA auth_schema TO auth_svc_user;
