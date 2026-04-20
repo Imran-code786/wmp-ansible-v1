@@ -18,9 +18,17 @@
           - "postgresql16-server"
           - "postgresql16"
 
+#    - name: Initialize Database
+#      ansible.builtin.shell: /usr/pgsql-16/bin/postgresql-16-setup initdb
+#      ignore_errors: yes
+    - name: Check if PostgreSQL is already initialized
+      ansible.builtin.stat:
+         path: /var/lib/pgsql/16/data/PG_VERSION
+      register: pgdata
+
     - name: Initialize Database
       ansible.builtin.shell: /usr/pgsql-16/bin/postgresql-16-setup initdb
-      ignore_errors: yes
+      when: not pgdata.stat.exists
 
     - name: Update postgres listen address
       ansible.builtin.replace:
@@ -41,7 +49,7 @@
 
     - name: Copy schema file
       ansible.builtin.copy:
-              src: setup.sql
-              dest: /tmp/setup.sql
+         src: setup.sql
+         dest: /tmp/setup.sql
 
 
