@@ -1,0 +1,72 @@
+####  dnf install -y golang
+#
+#####    useradd -r -s /bin/false appuser
+#####   mkdir -p /app
+#
+####    cp auth-service.service /etc/systemd/system/auth-service.service
+#
+#    curl -L -o /tmp/auth-service.tar.gz https://raw.githubusercontent.com/raghudevopsb88/wealth-project/main/artifacts/auth-service.tar.gz
+#    cd /app
+#    tar xzf /tmp/auth-service.tar.gz
+#
+#    cd /app
+#    CGO_ENABLED=0 go build -o auth-service ./cmd/server
+#
+#    chown -R appuser:appuser /app
+#    chmod o-rwx /app -R
+#
+#
+#    systemctl daemon-reload
+#    systemctl enable auth-service
+#    systemctl start auth-service
+
+- name: Analytics Service Setup
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create appuser
+      ansible.builtin.user:
+        name: appuser
+        system: yes
+        shell: /bin/false
+
+    - name: create /app directory
+      ansible.builtin.file:
+        path: /app
+        state: directory
+
+    - name: Install golang
+      ansible.builtin.dnf:
+        name: golang
+        state: present
+
+    - name: Copy service file
+      ansible.builtin.copy:
+        src: auth-service.service
+        dest: /etc/systemd/system/auth-service.service
+
+    - name: Download and Extract application
+      ansible.builtin.unarchive:
+        src: https://raw.githubusercontent.com/raghudevopsb88/wealth-project/main/artifacts/auth-service.tar.gz
+        dest: /app
+        remote_src: yes
+
+    - name: Build application
+      ansible.builtin.shell: CGO_ENABLED=0 go build -o auth-service ./cmd/server
+      args:
+        chdir: /app
+
+    - name: Set ownership
+      ansible.builtin.file:
+        path: /app
+        owner: appuser
+        group: appuser
+        recure: yes
+        mode: 'o-rwx'
+
+    - name: start auth-service
+      ansible.builtin.systemd_service:
+        name: auth-service
+        daemon_reload: yes
+        enabled: yes
+        state: restarted
