@@ -62,7 +62,7 @@
         owner: appuser
         group: appuser
         recurse: yes
-        mode: 'o-rwx'
+        mode: '0755'
 
     - name: Start auth-service
       ansible.builtin.systemd_service:
