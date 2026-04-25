@@ -1,5 +1,5 @@
 SELECT 'CREATE DATABASE wmp' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'wmp')\gexec
-    \c wmp
+\c wmp
 
 CREATE SCHEMA IF NOT EXISTS portfolio_schema;
 CREATE SCHEMA IF NOT EXISTS analytics_schema;
