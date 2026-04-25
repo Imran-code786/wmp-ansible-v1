@@ -1,5 +1,5 @@
-CREATE DATABASE wmp;
-\c wmp
+SELECT 'CREATE DATABASE wmp' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'wmp')\gexec
+    \c wmp
 
 CREATE SCHEMA IF NOT EXISTS portfolio_schema;
 CREATE SCHEMA IF NOT EXISTS analytics_schema;
@@ -19,13 +19,11 @@ END IF;
 END
 $$;
 
-
 GRANT USAGE, CREATE ON SCHEMA portfolio_schema TO portfolio_svc_user;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA portfolio_schema TO portfolio_svc_user;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA portfolio_schema TO portfolio_svc_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA portfolio_schema GRANT ALL ON TABLES TO portfolio_svc_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA portfolio_schema GRANT ALL ON SEQUENCES TO portfolio_svc_user;
-
 
 GRANT USAGE, CREATE ON SCHEMA analytics_schema TO analytics_svc_user;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA analytics_schema TO analytics_svc_user;
