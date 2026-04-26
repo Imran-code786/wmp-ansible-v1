@@ -43,7 +43,7 @@
 
     - name: Copy service file
       ansible.builtin.copy:
-        src: analytics-service.service
+        src:  analytics-service.service
         dest: /etc/systemd/system/analytics-service.service
 
     - name: Start analytics-service
