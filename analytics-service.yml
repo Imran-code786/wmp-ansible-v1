@@ -1,4 +1,4 @@
-- name: Analytics Service Setup
+  - name: Analytics Service Setup
   hosts: all
   become: yes
   tasks:
